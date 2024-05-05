@@ -1,5 +1,6 @@
 import psutil
 
+#retrieves current logged-in users and creates a list, a dictionary is created based on the parameters listed below
 def get_users():
     users = []
     for user in psutil.users():
@@ -9,6 +10,7 @@ def get_users():
             'host': user.host,
             'started': user.started
         }
+        #checks each user.name for the tag 'NT AUTHORITY\\SYSTEM' which denotes ADMIN priveleges.
         if user.name == 'NT AUTHORITY\\SYSTEM':
             user_info['authorization'] = 'Administrator'
         else:
@@ -16,6 +18,7 @@ def get_users():
         users.append(user_info)
     return users
 
+#retrieves the user list and prints out the user authorization level
 def main():
     user_list = get_users()
     for user in user_list:
